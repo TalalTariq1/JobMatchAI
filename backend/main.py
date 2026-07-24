@@ -22,7 +22,7 @@ app = FastAPI()
 # backend works both locally and in production without changing code.
 FRONTEND_ORIGINS = os.environ.get(
     "FRONTEND_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173",
+    "http://localhost:5173,http://127.0.0.1:5173,https://job-match-ai-lilac.vercel.app",
 )
 FRONTEND_ORIGINS_LIST = [o.strip() for o in FRONTEND_ORIGINS.split(",") if o.strip()]
 
