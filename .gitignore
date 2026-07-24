@@ -1,14 +1,17 @@
 # Environment files and secrets
 .env
 .env.*
+!.env.example
 backend/.env
 backend/.env.*
+!backend/.env.example
 backend/firebase-key.json
 backend/gmail-credentials.json
 backend/gmail-web-credentials.json
 backend/token.json
 backend/token.txt
 backend/temp_*.pdf
+!frontend/.env.example
 
 # Local/generated data
 backend/*.pdf
