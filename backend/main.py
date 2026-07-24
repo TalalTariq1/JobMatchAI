@@ -1,3 +1,6 @@
+import base64
+import json
+import os
 import shutil
 from fastapi import FastAPI, UploadFile, File, Header, HTTPException, Depends
 from fastapi.responses import RedirectResponse
@@ -13,7 +16,6 @@ from email_drafter import draft_email
 from email_sender import save_gmail_token, send_email
 from history import save_application, save_sent_email, get_user_history
 import firebase_client  # just importing this runs firebase_admin.initialize_app once
-import os
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -39,6 +41,44 @@ GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 # set BACKEND_BASE_URL to your Render URL (e.g. https://jobmatchai-r9zk.onrender.com)
 BACKEND_BASE_URL = os.environ.get("BACKEND_BASE_URL", "http://localhost:8000").rstrip("/")
 REDIRECT_URI = f"{BACKEND_BASE_URL}/oauth2callback"
+
+GMAIL_CLIENT_SECRETS_JSON = os.environ.get("GMAIL_CLIENT_SECRETS_JSON")
+GMAIL_CLIENT_SECRETS_FILE = os.path.join(
+    os.path.dirname(__file__),
+    "gmail-web-credentials.json",
+)
+
+
+def load_gmail_client_config():
+    if not GMAIL_CLIENT_SECRETS_JSON:
+        return None
+    try:
+        return json.loads(GMAIL_CLIENT_SECRETS_JSON)
+    except Exception:
+        return json.loads(base64.b64decode(GMAIL_CLIENT_SECRETS_JSON).decode())
+
+
+def create_gmail_flow():
+    if GMAIL_CLIENT_SECRETS_JSON:
+        client_config = load_gmail_client_config()
+        return Flow.from_client_config(
+            client_config,
+            scopes=GMAIL_SCOPES,
+            redirect_uri=REDIRECT_URI,
+            autogenerate_code_verifier=False,
+        )
+
+    if not os.path.exists(GMAIL_CLIENT_SECRETS_FILE):
+        raise RuntimeError(
+            f"Google client secrets file not found: {GMAIL_CLIENT_SECRETS_FILE}"
+        )
+
+    return Flow.from_client_secrets_file(
+        GMAIL_CLIENT_SECRETS_FILE,
+        scopes=GMAIL_SCOPES,
+        redirect_uri=REDIRECT_URI,
+        autogenerate_code_verifier=False,
+    )
 
 
 def verify_user(authorization: str = Header(...)):
@@ -160,12 +200,7 @@ def connect_gmail(user_id: str):
     user_id as the 'state' parameter, so we know whose token we're saving
     once they come back.
     """
-    flow = Flow.from_client_secrets_file(
-        "gmail-web-credentials.json",
-        scopes=GMAIL_SCOPES,
-        redirect_uri=REDIRECT_URI,
-        autogenerate_code_verifier=False,
-    )
+    flow = create_gmail_flow()
     authorization_url, _ = flow.authorization_url(
         access_type="offline",       # "offline" is what gives us a refresh token, not just a short-lived one
         include_granted_scopes="true",
@@ -183,12 +218,7 @@ def oauth2callback(code: str, state: str):
     user_id we attached earlier, now handed back to us unchanged, so we
     know exactly whose token this is.
     """
-    flow = Flow.from_client_secrets_file(
-        "gmail-web-credentials.json",
-        scopes=GMAIL_SCOPES,
-        redirect_uri=REDIRECT_URI,
-        autogenerate_code_verifier=False,
-    )
+    flow = create_gmail_flow()
     flow.fetch_token(code=code)
 
     user_id = state
