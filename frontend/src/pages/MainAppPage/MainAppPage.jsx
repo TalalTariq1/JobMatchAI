@@ -8,7 +8,7 @@ import {
   getConnectGmailUrl,
   checkGmailStatus,
 } from "../../services/api";
-import GitHubProfileInput from "../../components/GitHubProfileInput/GitHubProfileInput";
+import GitHubProfileInput from "../../components/GithubProfileInput/GitHubProfileInput";
 import CVUpload from "../../components/CVUpload/CVUpload";
 import JobDescriptionInput from "../../components/JobDescriptionInput/JobDescriptionInput";
 import MatchProgressWheel from "../../components/MatchProgressWheel/MatchProgressWheel";
