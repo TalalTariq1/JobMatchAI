@@ -13,23 +13,32 @@ from email_drafter import draft_email
 from email_sender import save_gmail_token, send_email
 from history import save_application, save_sent_email, get_user_history
 import firebase_client  # just importing this runs firebase_admin.initialize_app once
+import os
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Your React dev server runs on a different port (5173) than this backend
-# (8000). Browsers block requests between different ports by default -
-# this explicitly allows your frontend's origin to call this backend.
+# Configure CORS and OAuth redirect using environment variables so the
+# backend works both locally and in production without changing code.
+FRONTEND_ORIGINS = os.environ.get(
+    "FRONTEND_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+)
+FRONTEND_ORIGINS_LIST = [o.strip() for o in FRONTEND_ORIGINS.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=FRONTEND_ORIGINS_LIST,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
-REDIRECT_URI = "http://localhost:8000/oauth2callback"
+# Backend base URL is used for OAuth redirect construction. In production
+# set BACKEND_BASE_URL to your Render URL (e.g. https://jobmatchai-r9zk.onrender.com)
+BACKEND_BASE_URL = os.environ.get("BACKEND_BASE_URL", "http://localhost:8000").rstrip("/")
+REDIRECT_URI = f"{BACKEND_BASE_URL}/oauth2callback"
 
 
 def verify_user(authorization: str = Header(...)):
