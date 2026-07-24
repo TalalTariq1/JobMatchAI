@@ -1,17 +1,17 @@
 // This file's only job is to connect this app to your Firebase project.
-// Every other file that needs auth or Firestore imports from here, so
-// there is exactly one place this config lives.
+// It reads configuration from Vite env vars so production keys live in
+// Vercel (or other host) and local development uses `.env.local`.
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDte7JJlwlc810CJuO5knrSG6xSPY9ac28",
-  authDomain: "job-agent-90ee9.firebaseapp.com",
-  projectId: "job-agent-90ee9",
-  storageBucket: "job-agent-90ee9.firebasestorage.app",
-  messagingSenderId: "499711331515",
-  appId: "1:499711331515:web:361e6d0a0610f48a89ed9e",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
