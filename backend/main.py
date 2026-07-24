@@ -43,6 +43,7 @@ BACKEND_BASE_URL = os.environ.get("BACKEND_BASE_URL", "http://localhost:8000").r
 REDIRECT_URI = f"{BACKEND_BASE_URL}/oauth2callback"
 
 GMAIL_CLIENT_SECRETS_JSON = os.environ.get("GMAIL_CLIENT_SECRETS_JSON")
+GMAIL_CREDENTIALS_JSON = os.environ.get("GMAIL_CREDENTIALS_JSON")
 GMAIL_CLIENT_SECRETS_FILE = os.path.join(
     os.path.dirname(__file__),
     "gmail-web-credentials.json",
@@ -50,17 +51,25 @@ GMAIL_CLIENT_SECRETS_FILE = os.path.join(
 
 
 def load_gmail_client_config():
-    if not GMAIL_CLIENT_SECRETS_JSON:
+    raw_json = GMAIL_CLIENT_SECRETS_JSON or GMAIL_CREDENTIALS_JSON
+    if not raw_json:
         return None
+
     try:
-        return json.loads(GMAIL_CLIENT_SECRETS_JSON)
+        return json.loads(raw_json)
     except Exception:
-        return json.loads(base64.b64decode(GMAIL_CLIENT_SECRETS_JSON).decode())
+        try:
+            return json.loads(base64.b64decode(raw_json).decode())
+        except Exception as err:
+            raise RuntimeError(
+                "Failed to parse Gmail credentials JSON from environment. "
+                "Ensure GMAIL_CLIENT_SECRETS_JSON or GMAIL_CREDENTIALS_JSON contains valid JSON or base64-encoded JSON."
+            ) from err
 
 
 def create_gmail_flow():
-    if GMAIL_CLIENT_SECRETS_JSON:
-        client_config = load_gmail_client_config()
+    client_config = load_gmail_client_config()
+    if client_config:
         return Flow.from_client_config(
             client_config,
             scopes=GMAIL_SCOPES,
@@ -70,7 +79,9 @@ def create_gmail_flow():
 
     if not os.path.exists(GMAIL_CLIENT_SECRETS_FILE):
         raise RuntimeError(
-            f"Google client secrets file not found: {GMAIL_CLIENT_SECRETS_FILE}"
+            f"Google client secrets file not found: {GMAIL_CLIENT_SECRETS_FILE}. "
+            "Set GMAIL_CLIENT_SECRETS_JSON or GMAIL_CREDENTIALS_JSON in the environment, "
+            "or deploy gmail-web-credentials.json alongside the backend."
         )
 
     return Flow.from_client_secrets_file(
