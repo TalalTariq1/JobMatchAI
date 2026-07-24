@@ -1,0 +1,55 @@
+.progress-wheel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.progress-wheel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  font-family: "Sora", sans-serif;
+}
+
+.progress-wheel-percent {
+  font-size: 30px;
+  font-weight: 800;
+  font-family: "Sora", sans-serif;
+  fill: var(--ink);
+}
+
+.progress-wheel-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  fill: var(--brand-500);
+}
+
+.competitiveness-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.competitiveness-row strong {
+  color: var(--ink);
+  font-family: "Sora", sans-serif;
+}
+
+.competitiveness-bar-track {
+  width: 100%;
+  height: 9px;
+  background-color: #EDECFB;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.competitiveness-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5B4FE9, #8B5CF6);
+  border-radius: 999px;
+}

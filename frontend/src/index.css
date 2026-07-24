@@ -1,0 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* Ink & canvas */
+  --ink: #16161D;
+  --ink-soft: #4B4B5A;
+  --canvas: #F5F5FC;
+  --surface: #FFFFFF;
+  --border-soft: #E9E8F7;
+
+  /* Brand - a richer indigo/violet pair, not the flat default blue */
+  --brand-500: #5B4FE9;
+  --brand-600: #4A3FD8;
+  --brand-glow: #8B7CFB;
+
+  /* Status */
+  --success-bg: #E3F9EE;
+  --success-fg: #0C8C5A;
+  --warn-bg: #FDF1DD;
+  --warn-fg: #B7791F;
+  --danger: #E5484D;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --shadow-card: 0 2px 8px rgba(35, 25, 90, 0.05), 0 12px 32px rgba(35, 25, 90, 0.06);
+  --shadow-card-hover: 0 4px 14px rgba(35, 25, 90, 0.08), 0 18px 40px rgba(35, 25, 90, 0.09);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  background-color: var(--canvas);
+  background-image: radial-gradient(circle at 10% 0%, rgba(139, 124, 251, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(91, 79, 233, 0.06), transparent 35%);
+  background-attachment: fixed;
+  color: var(--ink);
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Sora", "Inter", sans-serif;
+}
+
+/* ---------- Shared card ---------- */
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Sora", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px 0;
+}
+
+.card-title svg {
+  color: var(--brand-500);
+}
+
+.card-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, rgba(91, 79, 233, 0.12), rgba(139, 124, 251, 0.18));
+  color: var(--brand-500);
+  flex-shrink: 0;
+}
+
+.card-subtext {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0 0 18px 0;
+  line-height: 1.5;
+}
+
+/* ---------- Shared form elements ---------- */
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 7px;
+  letter-spacing: 0.1px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: #F1F1FA;
+  font-size: 14.5px;
+  color: var(--ink);
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.text-input:focus {
+  border-color: var(--brand-500);
+  background-color: #FFFFFF;
+}
+
+.text-input::placeholder {
+  color: #9C9BB5;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--danger);
+  font-size: 13px;
+  margin: 10px 0 0 0;
+}
+
+.field-success {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--success-fg);
+  background-color: var(--success-bg);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin: 10px 0 0 0;
+}
+
+/* ---------- Shared buttons ---------- */
+.primary-button {
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+  color: #FFFFFF;
+  border: none;
+  padding: 13px 22px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: "Sora", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(91, 79, 233, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(91, 79, 233, 0.36);
+}
+
+.primary-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.primary-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondary-button {
+  background-color: #FFFFFF;
+  color: var(--ink);
+  border: 1.5px solid var(--border-soft);
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: "Sora", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: var(--brand-500);
+  background-color: #FAFAFF;
+  transform: translateY(-1px);
+}
+
+.secondary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Accessibility ---------- */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

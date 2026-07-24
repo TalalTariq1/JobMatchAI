@@ -1,0 +1,153 @@
+.main-app-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 36px 24px 90px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.gmail-connect-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 22px;
+  background: linear-gradient(135deg, #F8F4FF, #F3F2FF);
+  border: 1px solid #E6E2FB;
+}
+
+.gmail-connect-banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background-color: rgba(91, 79, 233, 0.12);
+  color: var(--brand-500);
+  flex-shrink: 0;
+}
+
+.gmail-connect-banner-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+  .gmail-connect-banner {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .gmail-connect-banner-text {
+    font-size: 15px;
+  }
+}
+
+.gmail-connect-banner-text strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.gmail-connect-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #F1F0FD, #F8F7FE);
+  border: 1px solid #E2E0FA;
+}
+
+.gmail-connect-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.gmail-connect-label svg {
+  color: var(--brand-500);
+  flex-shrink: 0;
+}
+
+.gmail-status-checking {
+  font-size: 13px;
+  color: #9C9BB5;
+}
+
+.gmail-connected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--success-bg);
+  color: var(--success-fg);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+
+.analyze-button-row {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.analyze-button {
+  padding: 15px 38px;
+  font-size: 15px;
+}
+
+.match-results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.match-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.draft-email-button-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.draft-email-button {
+  background: linear-gradient(135deg, #0F766E, #115E59);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+.draft-email-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #115E59, #134E4A);
+  border-color: transparent;
+}
+
+.sent-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  color: var(--success-fg);
+  font-weight: 700;
+  font-family: "Sora", sans-serif;
+  background-color: var(--success-bg);
+  border: 1px solid #BFEDD6;
+}
+
+.sent-confirmation p {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .match-results-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,30 @@
+.github-input-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.github-input-row .text-input {
+  flex: 1;
+  font-size: 16px;
+  padding: 14px 18px;
+}
+
+.github-fetch-button {
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 15.5px;
+  padding: 12px 18px;
+}
+
+@media (max-width: 720px) {
+  .github-input-row {
+    flex-direction: column;
+  }
+
+  .github-input-row .text-input,
+  .github-fetch-button {
+    width: 100%;
+    font-size: 15px;
+  }
+}

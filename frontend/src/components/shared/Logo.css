@@ -1,0 +1,52 @@
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #5B4FE9, #8B5CF6);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(91, 79, 233, 0.35);
+}
+
+.logo-wordmark {
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  color: #16161D;
+  letter-spacing: -0.2px;
+}
+
+.logo-wordmark-accent {
+  color: #5B4FE9;
+}
+
+.logo-sm .logo-badge {
+  width: 38px;
+  height: 38px;
+}
+
+.logo-sm .logo-wordmark {
+  font-size: 21px;
+}
+
+.logo-md .logo-badge {
+  width: 44px;
+  height: 44px;
+}
+
+.logo-md .logo-wordmark {
+  font-size: 20px;
+}
+
+.logo-lg .logo-badge {
+  width: 56px;
+  height: 56px;
+}
+
+.logo-lg .logo-wordmark {
+  font-size: 24px;
+}

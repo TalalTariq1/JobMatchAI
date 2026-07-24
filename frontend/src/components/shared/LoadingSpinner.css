@@ -1,0 +1,24 @@
+.loading-spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px;
+}
+
+.loading-spinner-icon {
+  color: var(--brand-500);
+  animation: spin 0.9s linear infinite;
+}
+
+.loading-spinner-label {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

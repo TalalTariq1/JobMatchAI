@@ -1,0 +1,50 @@
+.skills-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "Sora", sans-serif;
+  margin: 0 0 16px 0;
+}
+
+.skills-title-matched {
+  color: var(--success-fg);
+}
+
+.skills-title-missing {
+  color: var(--warn-fg);
+}
+
+.skills-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skills-pill {
+  padding: 7px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+
+.skills-pill:hover {
+  transform: translateY(-1px);
+}
+
+.skills-pill-matched {
+  background-color: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.skills-pill-missing {
+  background-color: var(--warn-bg);
+  color: var(--warn-fg);
+}
+
+.skills-empty {
+  font-size: 13px;
+  color: #9C9BB5;
+}
