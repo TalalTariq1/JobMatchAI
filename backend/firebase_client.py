@@ -1,14 +1,30 @@
+import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# This is the one-time setup step: it reads your private key file and uses it
-# to prove to Google's servers that these requests are really coming from your
-# backend, not some random program pretending to be you.
-cred = credentials.Certificate("firebase-key.json")
+# Initialize Firebase using either:
+# 1) the JSON service account stored locally at `firebase-key.json` (existing behavior), or
+# 2) the `FIREBASE_SERVICE_ACCOUNT_JSON` environment variable (recommended for Render).
+sa_json = os.environ.get("FIREBASE_SERVICE_ACCOUNT_JSON")
+cred = None
+if sa_json:
+    try:
+        sa_info = json.loads(sa_json)
+    except Exception:
+        # Support base64-encoded JSON as well
+        import base64
+
+        sa_info = json.loads(base64.b64decode(sa_json).decode())
+
+    cred = credentials.Certificate(sa_info)
+else:
+    # Fallback to local file for developer convenience
+    cred = credentials.Certificate("firebase-key.json")
+
 firebase_admin.initialize_app(cred)
 
-# This gives you an actual object you can use to read/write data —
-# think of `db` as your remote control for talking to Firestore from now on.
+# Firestore client
 db = firestore.client()
 
 
